@@ -18,7 +18,7 @@ pipeline{
         }
         stage("Testing Dev"){
             steps{
-                sh(sript: "echo \"Testing Dev\"")
+                sh(script: "echo \"Testing Dev\"")
             }
         }
         stage("Deploying QA"){
