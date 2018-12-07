@@ -2,6 +2,7 @@ pipeline{
     agent{
         node{
             label "" 
+            customWorkspace "/var/lib/jenkins/workspace/${BRANCH_NAME}"
         }
     }
     stages{
@@ -12,7 +13,13 @@ pipeline{
         }
         stage("Building"){
             steps{
-                sh(script: "echo Building", returnStdout: false)
+                parallel svc_usermng:{
+                    sh(script: "echo \"Building SVC User Management\"", returnStdout: false)
+                },
+                svc_sellsmng:{
+                    sh(script: "echo \"Building SVC Sells Management\"", returnStdout: false)
+                },
+                failFast: true
             }
         }
         stage("Deploying Dev"){
